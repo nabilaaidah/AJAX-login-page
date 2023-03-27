@@ -4,84 +4,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AJAX Login Page</title>
     <script
-    src="https://code.jquery.com/jquery-3.6.4.js"
-    integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
-    crossorigin="anonymous"></script>
+        src="https://code.jquery.com/jquery-3.6.4.js"
+        integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+        crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <title>AJAX Login Page</title>
 </head>
-<style>
-    * {
-        box-sizing: border-box;
-    }
-    body {
-        font-family: 'Roboto Slab';
-        font-size: 1.5rem;
-        font-weight: 300;
-    }
-    div#contact_form {
-        width: 800px;
-        display: flex;
-        align-items: stretch;
-        justify-content: space-evenly;
-        border: 2px solid black;
-        padding: 10px;
-    }
-    div.input-box {
-        display: flex;
-        margin: 10px 0;
-        flex-wrap: wrap;
-    }
-    div.input-box label {
-        display: inline-block;
-        margin: 10px 10px 10px 0;
-        width: 20%;
-    }
-    div.input-box input {
-        font-size: 1.5rem;
-        border: 1px solid #ccc;
-        padding: 4px 8px;
-        flex: 1;
-    }
-    input.button {
-        font-size: 1.5rem;
-        background: black;
-        color: white;
-        border: 1px solid black;
-        margin: 10px;
-        padding: 4px 40px;
-    }
-    h1 {
-        font-size: 5rem;
-        text-transform: uppercase;
-        font-family: 'Passion One';
-        font-weight: 400;
-        letter-spacing: 2px;
-        line-height: 0.8;
-    }
-    div.greetings {
-        text-align: center;
-        font-size: 1.2rem;
-        background-color: #d3d3d3;
-        background-image: linear-gradient(15deg, transparent 28%, rgba(255, 255, 255, 0.5) 28%);
-        background-size: 50px;
-    }
-    div.input-box input.error {
-        border: 2px dashed red;
-        background: #fee;
-    }
-    div.input-box label.error {
-        color: red;
-        font-size: 1rem;
-        text-align: right;
-        width: 100%;
-        margin: 10px 0;
-    }
-</style>
 <body>
     <div id="contact_form">
-        <form name="contact" action="bin/process.php" method="post">
+        <form name="contact" action="">
           <fieldset>
             <div class="input-box">
             <label for="name" id="name_label">Name</label>
@@ -108,7 +41,7 @@
     </div>
     <script>
         $(function () {
-            function sendData($form){
+            function sendData($form) {
                 let dataString = $(this).serialize();
 
                 return $.ajax({
@@ -118,18 +51,21 @@
                 });
             }
 
-
             $("form").validate();
+
             $("form").on("submit", function (e) {
                 e.preventDefault();
-                sendData($(this)).done(function (){
-                    $("#contact_form").html("<div id='message'></div>");
-                    $("#message")
+
+                if ($(this).valid()){
+                    sendData($(this)).done(function () {
+                        $("#contact_form").html("<div id='message'></div>");
+                        $("#message")
                         .html("<h2>Contact Form Submitted!</h2>")
                         .append("<p>We will be in touch soon.</p>")
                         .hide()
                         .fadeIn(1500);
-                });
+                    });
+                }
             });
         });
     </script>
